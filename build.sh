@@ -7,6 +7,12 @@ fi
 
 cd rpcs3
 
+if [ "$WORKSPACE" == true ]
+then
+	bash -l
+	exit 0
+fi
+
 if [ "$RUN" == "true" ]
 then
 	BIN_PATH=$(realpath build/bin/rpcs3)
@@ -29,6 +35,9 @@ mkdir -p build
 cd build
 cmake .. \
 	-DUSE_SYSTEM_FFMPEG=ON \
+	-DUSE_SDL=ON \
+	-DUSE_SYSTEM_SDL=ON \
+	-DOpenGL_GL_PREFERENCE=LEGACY \
 	-G Ninja
 
 ninja

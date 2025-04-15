@@ -67,6 +67,7 @@ fi
 
 RUN=${RUN:-false}
 CLEAN_BUILD=${CLEAN_BUILD:-false}
+WORKSPACE=${WORKSPACE:-false}
 
 create_directory_if_not_exists () {
 	if ! [ -e "$1" ]
@@ -82,6 +83,9 @@ podman run \
 	--rm -it \
 	--ipc host \
 	--net host \
+	--ulimit host \
+	--security-opt seccomp=unconfined \
+	--security-opt label=disable \
 	$XDGR \
 	$XORG \
 	$DRI \
@@ -93,6 +97,7 @@ podman run \
 	-w /work_dir \
 	--env RUN=$RUN \
 	--env CLEAN_BUILD=$CLEAN_BUILD \
+	--env WORKSPACE=$WORKSPACE \
 	-v ./home_dir:/home_dir \
 	-v ./software:/software:ro \
 	--env HOME=/home_dir \
