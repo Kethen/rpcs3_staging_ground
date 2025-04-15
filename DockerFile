@@ -1,0 +1,28 @@
+FROM fedora:41
+
+# load rpm fusion for ffmpeg and mesa-va-drivers-freeworld
+RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+RUN dnf install -y ffmpeg mesa-va-drivers-freeworld mesa-vulkan-drivers-freeworld ffmpeg-devel
+
+# symlink ffmpeg in a way that cmake don't get mad
+# oh they fixed it at the moment
+#RUN bash -c 'ln -s /usr/lib64/libavcodec.so.*.* /usr/lib64/libavcodec.so'
+#RUN bash -c 'ln -s /usr/lib64/libavformat.so.*.* /usr/lib64/libavformat.so'
+#RUN bash -c 'ln -s /usr/lib64/libavutil.so.*.* /usr/lib64/libavutil.so'
+#RUN bash -c 'ln -s /usr/lib64/libswscale.so.*.* /usr/lib64/libswscale.so'
+#RUN bash -c 'ln -s /usr/lib64/libswresample.so.*.* /usr/lib64/libswresample.so'
+
+# build dep as indicated
+RUN dnf install -y alsa-lib-devel cmake ninja-build glew glew-devel libatomic libevdev-devel libudev-devel openal-devel qt6-qtbase-devel qt6-qtbase-private-devel vulkan-devel pipewire-jack-audio-connection-kit-devel qt6-qtmultimedia-devel qt6-qtsvg-devel llvm-devel
+
+# more build deps
+RUN dnf install -y SDL3-devel libcurl-devel
+
+# git
+RUN dnf install -y git
+
+# userspace graphics drivers
+RUN dnf install -y mesa-dri-drivers
+
+# container debug
+RUN dnf install -y xterm pavucontrol glx-utils vulkan-tools
