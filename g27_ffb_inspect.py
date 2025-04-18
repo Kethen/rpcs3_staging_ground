@@ -91,6 +91,9 @@ def filter_ffb_effect(data):
 		if data[1] == 0x81:
 			print("changing wheel range to {} degree with ext_cmd 0x81".format(data[2] | (data[3] << 8)))
 			logged = True
+		if data[1] == 0x12:
+			print("changing wheel led to {}".format(hex(data[2])))
+			logged = True
 		if not logged:
 			print("ext cmd {}".format(hex(data[1])))
 
