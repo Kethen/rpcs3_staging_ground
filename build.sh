@@ -22,6 +22,12 @@ then
 		exit 1
 	fi
 
+	export SDL_HAPTIC_LG4FF_SPRING=100
+	export SDL_HAPTIC_LG4FF_DAMPER=100
+	export SDL_HAPTIC_LG4FF_FRICTION=100
+	export LD_LIBRARY_PATH="/work_dir/sdl_test:$LD_LIBRARY_PATH"
+
+	#gdb -ex 'run' "$BIN_PATH"
 	"$BIN_PATH"
 
 	exit 0

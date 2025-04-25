@@ -68,18 +68,6 @@ def parse_usbpcap_header(handle):
 def filter_ffb_effect(data):
 	if len(data) != 16:
 		return
-	if data[0] & 0xf == 0xd:
-		# gran turismo 6 does not set this at all
-		if data[1] == 0:
-			print("setting asap loop")
-		else:
-			print("setting 2ms loop {}".format(data[1]))
-	if data[0] & 0xf == 0xf:
-		# odd, gran turismo 6 also does not touch this
-		if data[1] == 0:
-			print("setting deadband to off")
-		else:
-			print("setting deadband to on {}".format(data[1]))
 	if data[0] == 0xf8:
 		logged = False
 		if data[1] == 0x2:
@@ -96,6 +84,23 @@ def filter_ffb_effect(data):
 			logged = True
 		if not logged:
 			print("ext cmd {}".format(hex(data[1])))
+		return
+
+	slot_mask = data[0] >> 4
+	cmd = data[0] & 0xf
+
+	if cmd == 0xd:
+		# gran turismo 6 does not set this at all
+		if data[1] == 0:
+			print("setting asap loop")
+		else:
+			print("setting 2ms loop {}".format(data[1]))
+	if cmd == 0xf:
+		# odd, gran turismo 6 also does not touch this
+		if data[1] == 0:
+			print("setting deadband to off")
+		else:
+			print("setting deadband to on {}".format(data[1]))
 
 
 handle = open(sys.argv[1], "rb")

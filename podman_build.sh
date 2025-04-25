@@ -78,6 +78,7 @@ create_directory_if_not_exists () {
 
 create_directory_if_not_exists home_dir
 create_directory_if_not_exists software
+create_directory_if_not_exists sdl_test
 
 podman run \
 	--rm -it \
@@ -92,6 +93,7 @@ podman run \
 	$PULSE \
 	$INPUT \
 	-v ./:/work_dir \
+	-v ./sdl_test:/work_dir/sdl_test:ro \
 	-v ./podman_build.sh:/work_dir/podman_build.sh:ro \
 	-v ./build.sh:/work_dir/build.sh:ro \
 	-w /work_dir \
