@@ -87,6 +87,7 @@ podman run \
 	--ulimit host \
 	--security-opt seccomp=unconfined \
 	--security-opt label=disable \
+	-v /etc/localtime:/etc/localtime:ro \
 	$XDGR \
 	$XORG \
 	$DRI \
