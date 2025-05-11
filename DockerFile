@@ -1,4 +1,4 @@
-FROM fedora:41
+FROM fedora:42
 
 # load rpm fusion for ffmpeg and mesa-va-drivers-freeworld
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -13,7 +13,7 @@ RUN dnf install -y ffmpeg mesa-va-drivers-freeworld mesa-vulkan-drivers-freeworl
 #RUN bash -c 'ln -s /usr/lib64/libswresample.so.*.* /usr/lib64/libswresample.so'
 
 # build dep as indicated
-RUN dnf install -y alsa-lib-devel cmake ninja-build glew glew-devel libatomic libevdev-devel libudev-devel openal-devel qt6-qtbase-devel qt6-qtbase-private-devel vulkan-devel pipewire-jack-audio-connection-kit-devel qt6-qtmultimedia-devel qt6-qtsvg-devel llvm-devel
+RUN dnf install -y alsa-lib-devel cmake ninja-build glew glew-devel libatomic libevdev-devel libudev-devel qt6-qtbase-devel qt6-qtbase-private-devel vulkan-devel pipewire-jack-audio-connection-kit-devel qt6-qtmultimedia-devel qt6-qtsvg-devel llvm-devel openal-soft-devel
 
 # more build deps
 RUN dnf install -y SDL3-devel libcurl-devel
