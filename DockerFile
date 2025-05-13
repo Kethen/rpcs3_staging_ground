@@ -15,6 +15,12 @@ RUN dnf install -y ffmpeg mesa-va-drivers-freeworld mesa-vulkan-drivers-freeworl
 # build dep as indicated
 RUN dnf install -y alsa-lib-devel cmake ninja-build glew glew-devel libatomic libevdev-devel libudev-devel qt6-qtbase-devel qt6-qtbase-private-devel vulkan-devel pipewire-jack-audio-connection-kit-devel qt6-qtmultimedia-devel qt6-qtsvg-devel llvm-devel openal-soft-devel
 
+# gcc building
+RUN dnf install -y gcc g++ binutils-gold
+
+# clang building
+RUN dnf install -y clang lld
+
 # more build deps
 RUN dnf install -y SDL3-devel libcurl-devel
 

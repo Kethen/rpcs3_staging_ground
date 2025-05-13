@@ -39,11 +39,37 @@ then
 fi
 mkdir -p build
 cd build
+
+if true
+then
+	export CC=clang
+	export CXX=clang++
+	export LINKER=lld
+	export AR=/usr/bin/llvm-ar
+	export RANLIB=/usr/bin/llvm-ranlib
+else
+	export CC=gcc
+	export CXX=g++
+	export LINKER=gold
+	export AR=/usr/bin/gcc-ar
+	export RANLIB=/usr/bin/gcc-ranlib
+	export CFLAGS="-fuse-linker-plugin"
+fi
+
+export LINKER_FLAG="-fuse-ld=${LINKER}"
+
 cmake .. \
 	-DUSE_SYSTEM_FFMPEG=ON \
 	-DUSE_SDL=ON \
 	-DUSE_SYSTEM_SDL=ON \
 	-DOpenGL_GL_PREFERENCE=LEGACY \
+	-DCMAKE_C_FLAGS="$CFLAGS" \
+	-DCMAKE_CXX_FLAGS="$CFLAGS" \
+	-DCMAKE_EXE_LINKER_FLAGS="${LINKER_FLAG}" \
+	-DCMAKE_MODULE_LINKER_FLAGS="${LINKER_FLAG}" \
+	-DCMAKE_SHARED_LINKER_FLAGS="${LINKER_FLAG}" \
+	-DCMAKE_AR="$AR" \
+	-DCMAKE_RANLIB="$RANLIB" \
 	-G Ninja
 
 ninja
