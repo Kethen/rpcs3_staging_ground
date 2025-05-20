@@ -58,6 +58,13 @@ fi
 
 export LINKER_FLAG="-fuse-ld=${LINKER}"
 
+if [ "$DEBUG" == true ]
+then
+	BUILD_TYPE=Debug
+else
+	BUILD_TYPE=Release
+fi
+
 cmake .. \
 	-DUSE_SYSTEM_FFMPEG=ON \
 	-DUSE_SDL=ON \
@@ -70,6 +77,7 @@ cmake .. \
 	-DCMAKE_SHARED_LINKER_FLAGS="${LINKER_FLAG}" \
 	-DCMAKE_AR="$AR" \
 	-DCMAKE_RANLIB="$RANLIB" \
+	-DCMAKE_BUILD_TYPE="$BUILD_TYPE" \
 	-G Ninja
 
 ninja

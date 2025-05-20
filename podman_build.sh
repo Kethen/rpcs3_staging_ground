@@ -54,6 +54,10 @@ if [ -S $pulse_socket_path ]
 then
 	PULSE="$PULSE -v $pulse_socket_path:$pulse_socket_path"
 fi
+if [ -n "$PULSE_SERVER" ]
+then
+	PULSE="$PULSE --env PULSE_SERVER=$PULSE_SERVER"
+fi
 
 INPUT=""
 if [ -e /dev/input ]
@@ -64,10 +68,15 @@ if [ -e /dev/bus/usb ]
 then
 	INPUT="$INPUT -v /dev/bus/usb:/dev/bus/usb"
 fi
+if [ -e /dev/uinput ]
+then
+	INPUT="$INPUT -v /dev/uinput:/dev/uinput"
+fi
 
 RUN=${RUN:-false}
 CLEAN_BUILD=${CLEAN_BUILD:-false}
 WORKSPACE=${WORKSPACE:-false}
+DEBUG=${DEBUG:-true}
 
 create_directory_if_not_exists () {
 	if ! [ -e "$1" ]
@@ -88,6 +97,7 @@ podman run \
 	--security-opt seccomp=unconfined \
 	--security-opt label=disable \
 	-v /etc/localtime:/etc/localtime:ro \
+	--cap-add=CAP_SYS_PTRACE \
 	$XDGR \
 	$XORG \
 	$DRI \
@@ -101,6 +111,7 @@ podman run \
 	--env RUN=$RUN \
 	--env CLEAN_BUILD=$CLEAN_BUILD \
 	--env WORKSPACE=$WORKSPACE \
+	--env DEBUG=$DEBUG \
 	-v ./home_dir:/home_dir \
 	-v ./software:/software:ro \
 	--env HOME=/home_dir \

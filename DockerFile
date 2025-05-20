@@ -27,8 +27,8 @@ RUN dnf install -y SDL3-devel libcurl-devel
 # git
 RUN dnf install -y git
 
-# gdb
-RUN dnf install -y gdb
+# gdb, lldb and ps
+RUN dnf install -y gdb lldb procps-ng
 
 # userspace graphics drivers
 RUN dnf install -y mesa-dri-drivers
