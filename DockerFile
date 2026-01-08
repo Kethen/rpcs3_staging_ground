@@ -1,4 +1,4 @@
-FROM fedora:42
+FROM fedora:43
 
 # load rpm fusion for ffmpeg and mesa-va-drivers-freeworld
 RUN dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
