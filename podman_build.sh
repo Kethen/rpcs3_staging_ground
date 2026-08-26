@@ -10,7 +10,7 @@ fi
 
 if ! podman image exists "$IMAGE_TAG"
 then
-	podman image build -f "$DOCKER_FILE" -t "$IMAGE_TAG"
+	podman image build -f "$DOCKER_FILE" -t "$IMAGE_TAG" --arch amd64
 fi
 
 XDGR=""
